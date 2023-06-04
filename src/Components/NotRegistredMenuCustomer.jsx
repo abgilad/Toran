@@ -1,9 +1,13 @@
 import React from 'react'
 
-export default function NotRegistredMenuCustomer() {
+export default function NotRegistredMenuCustomer({ newNumber, appointment }) {
+
+
+
+
     return (
         <div>
-            <button className='menuBtns'>לקוחות פרטיים</button>
+            <button onClick={() => { newNumber('pratit') }} className='menuBtns'>לקוחות פרטיים</button>
         </div>
     )
 }

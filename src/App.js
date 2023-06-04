@@ -20,7 +20,7 @@ function App() {
   const [isOpen, setIsOpen] = useState(false);
 
   const [data, setData] = useState([{ clientName: 'alex', id: '123456789' }, { clientName: 'moshe', id: '123123123' }, { clientName: 'gilad', id: '987654321' }])
-  const [appointment, setAppointment] = useState([{ name: 'kupa', num: '1' }, { name: 'iskit', num: '2' }, { name: 'kupa', num: '3' }])
+  const [appointment, setAppointment] = useState([])
   const [tempClient, setTempClient] = useState('')
 
   const newNumber = (mahlaka) => {
@@ -71,9 +71,9 @@ function App() {
       </Modal>
 
       <Routes>
-        <Route path='/' element={<Main modalNum={modalNum} data={data} setTempClient={setTempClient} tempClient={tempClient} />} />
+        <Route path='/' element={<Main currentNum={currentNum} data={data} setTempClient={setTempClient} tempClient={tempClient} appointment={appointment} />} />
         <Route path='/menu' element={<Menu newNumber={newNumber} appointment={appointment} />} />
-        <Route path='/pratit' element={<NotRegistredMenuCustomer />} />
+        <Route path='/pratit' element={<NotRegistredMenuCustomer newNumber={newNumber} appointment={appointment} />} />
       </Routes>
     </div>
   );

@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Modal from 'react-modal'
+
+Modal.setAppElement('#root');
 
 
+export default function Main({ data, setTempClient, tempClient, currentNum, appointment }) {
 
-
-export default function Main({ modalNum, data, setTempClient, tempClient }) {
-
-
+    const [isOpen, setIsOpen] = useState(false);
     const nav = useNavigate()
 
     const nums = () => {
@@ -22,7 +23,7 @@ export default function Main({ modalNum, data, setTempClient, tempClient }) {
     }
 
     const [num, setNum] = useState('')
-    const [clickCount, setClickCount] = useState(0);
+    const [clickCount, setClickCount] = useState(0); //proverka skolko zifr v diplee.
 
 
 
@@ -41,34 +42,53 @@ export default function Main({ modalNum, data, setTempClient, tempClient }) {
         })
     }
 
-    console.log(tempClient.id)
+    console.log(currentNum)
     console.log(num)
 
     const checkClient = () => {
-        if (tempClient.id === num) {
 
+        const ifHaveNum = appointment.find((val) => val.id === num)
+
+        console.log(ifHaveNum)
+
+        if (ifHaveNum) {
+            modalNum()
         }
         else if (num.length == 9) {
             const client = data.find((val) => val.id == num);
-            debugger
-            if (tempClient.id === num) {
-                nav('/')
-                // modalNum()
 
-            }
-            else if (client) {
+
+            if (client) {
                 setTempClient(client)
                 nav('/menu')
             }
-            else nav('/pratit')
+            else {
+                let temp = {
+                    clientName: '',
+                    id: num
+                };
+                setTempClient(temp);
+                nav('/pratit')
+            }
         }
         else alert('enter 9 digits')
 
     }
 
+    const modalNum = () => {
+
+        setIsOpen(true);
+        setTimeout(() => {
+            setIsOpen(false);
+        }, 3000); setNum(''); setClickCount(0)
+    }
+
     return (
         <div className='main'>
-
+            <Modal isOpen={isOpen}>
+                <h5>{currentNum.name}</h5><br />
+                <h1>{currentNum.num}</h1>
+            </Modal>
             <div className='display'>{num}</div>
             <div className='numbers'>
                 {viewNums()}
